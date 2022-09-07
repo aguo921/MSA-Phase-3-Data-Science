@@ -1,19 +1,20 @@
-import pandas as pd
 import numpy as np
+import pickle
 
-# Assume tar.gz file to be extracted at project directory.
+# extract dict object from file
 def unpickle(file):
-    import pickle
     with open(file, 'rb') as fo:
         dict = pickle.load(fo, encoding='bytes')
     return dict
 
+# reshape image from (3072,) to (32,32,3)
 def reshape_image(data):
     data = np.reshape(data, (3,32,32))
     data = np.moveaxis(data, 0, -1)
 
     return data
 
+# load training and test batches
 def load_batches():
     train_batch_1 = unpickle('cifar-10-batches-py/data_batch_1')
     train_batch_2 = unpickle('cifar-10-batches-py/data_batch_2')
@@ -24,11 +25,13 @@ def load_batches():
 
     return (train_batch_1, train_batch_2, train_batch_3, train_batch_4, train_batch_5), test_batch
 
+# combine batches into single batch
 def combine_batches(batches):
     combined_batch = {
         b'data': [],
         b'labels': []
     }
+
     for batch in batches:
         for i in range(len(batch[b'data'])):
             combined_batch[b'data'].append(batch[b'data'][i])
@@ -36,6 +39,7 @@ def combine_batches(batches):
 
     return combined_batch
 
+# return x and y vectors from batches
 def process_batch(batch, label, n):
     x = []
     y = []
@@ -57,34 +61,7 @@ def process_batch(batch, label, n):
     
     return np.array(x), np.array(y)
 
-# def filter_classes(batch, label):
-#     x = []
-#     y = []
-
-#     true_count = 0
-#     false_count = 0
-
-#     # convert label into 1 if label matches chosen label, 0 otherwise
-#     labels = np.array([int(i == label) for i in batch[b'labels']])
-
-#     # find the 
-#     _, counts = np.unique(labels, return_counts=True)
-#     n = min(counts)
-
-#     for i in range(len(batch[b'data'])):
-#         if batch[b'labels'][i] == label:
-#             if true_count < n:
-#                 x.append(reshape_image(batch[b'data'][i]))
-#                 y.append(1)
-#                 true_count += 1
-#         else:
-#             if false_count < n:
-#                 x.append(reshape_image(batch[b'data'][i]))
-#                 y.append(0)
-#                 false_count += 1
-
-#     return np.array(x), np.array(y)
-
+# display image
 def show_image(axs, data):
     axs.imshow(data)
     axs.axis('off')
