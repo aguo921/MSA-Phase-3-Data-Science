@@ -16,22 +16,48 @@ Recommended to use a virtual environment either from either [virtualenv](https:/
 
 Download the [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.html) and place it into the project directory.
 
-# Tensorboard:
-Tensorboard is an added feature to the skeleton project. Run 
-```
-tensorboard --logdir output/logs/
-``` 
-to run [tensorboard](https://github.com/tensorflow/tensorboard/blob/master/README.md). The main points of interests are accuracy and loss graphs. The tensorboard application can then be opened via the site `http://localhost:6006/`.
-
 # Usage:
+
+## Processing the data
+
 The `data_processing.py` file contains functions to process the data from the dataset.
+
+## Training the model
 
 The `make-model.ipynb` notebook trains the model using the dataset.
 
-The `use-model.ipynb` notebook uses the trained model to make predictions.
+Run
+```
+tensorboard --logdir output/logs/
+```
+to run [tensorboard](https://github.com/tensorflow/tensorboard/blob/master/README.md). The main points of interests are accuracy and loss graphs. The tensorboard application can then be opened via the site `http://localhost:6006/`.
 
-The `hyperparameter-tuning.ipynb` notebook contains hyperparameter tuning of the model.
+## Validating the model
+
+The `use-model.ipynb` notebook uses the trained model to make and validate predictions.
+
+## Hyperparameter tuning
+
+The `hyperparameter-tuning.ipynb` notebook performs hyperparameter tuning of the model.
+
+Run
+```
+tensorboard --logdir logs/hparam_tuning
+```
+to run [tensorboard](https://github.com/tensorflow/tensorboard/blob/master/README.md), open the tensorboard application via the site `http://localhost:6006/`, and navigate to the HParams dashboard.
+
+## Model report
 
 The `report.ipynb` notebook contains the report on the modelling process and performance.
 
-The `test_images` directory contains PNG and JPEG images to test the model on.
+## Image classification application
+
+The `app.py` file contains the image classification application.
+
+Run
+```
+streamlit run app.py
+```
+to run [streamlit](https://streamlit.io/) and the app will automatically run in a new tab in your browser.
+
+You can upload image files to the app and it will return the probability of the image being an airplane.

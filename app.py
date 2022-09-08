@@ -8,6 +8,8 @@ from PIL import Image
 
 import numpy as np
 
+st.title('Image classification')
+
 model = load_model("output/model")
 
 def probability(model, data):
