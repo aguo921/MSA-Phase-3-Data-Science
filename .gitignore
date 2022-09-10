@@ -1,6 +1,12 @@
 cifar-10-batches-py/
-output/
-.venv
 cifar-10-python.tar.gz
+
+.venv
+
 logs/
-__pycache__/data_processing.cpython-310.pyc
+__pycache__/
+
+/*
+!/output
+/output/*
+!/output/final_model
