@@ -10,7 +10,7 @@ import numpy as np
 
 st.title('Image classification')
 
-model = load_model("output/model")
+model = load_model("output/model3")
 
 def probability(model, data):
     reshaped = data.reshape(1,32,32,3)  # reshape data into model input shape
